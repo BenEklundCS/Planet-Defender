@@ -1,4 +1,4 @@
-package com.spaceinvaders.game;
+package com.planetdefender.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
