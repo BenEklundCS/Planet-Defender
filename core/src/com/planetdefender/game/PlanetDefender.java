@@ -18,28 +18,27 @@ public class PlanetDefender extends ApplicationAdapter {
 	private int height_aliens = 4;
 	private int spacing = 100;
 	private int minX_aliens = 10000;
-	private int minY_aliens = 10000;
 	private int maxX_aliens = 0;
-	private int maxY_aliens = 0;
 	private int direction_aliens = 1;
-	private float speed_aliens = 3f;
+	private float speed_aliens = 3.0f;
 	public Vector2 offset_aliens;
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("a-01.png");
+		img = new Texture("e-01.png");
 		img_bullet = new Texture("blue.png");
 		player = new Player(img, img_bullet);
-		img_alien = new Texture("a-03.png");
+		img_alien = new Texture("f-03.png");
 		createAliens(img_alien);
 	}
 
 	@Override
 	public void render () {
-		float deltaTime = Gdx.graphics.getDeltaTime();
 		ScreenUtils.clear(0, 0, 0, 1);
+
 		batch.begin();
+
 		player.Draw(batch);
 		for (int i = 0; i < aliens.length; i++) {
 			if (player.sprite_bullet.getBoundingRectangle().overlaps(aliens[i].sprite.getBoundingRectangle()) && aliens[i].alive) {
@@ -48,43 +47,48 @@ public class PlanetDefender extends ApplicationAdapter {
 			}
 		}
 
-		minX_aliens = 10000;
-		minY_aliens = 10000;
-		maxX_aliens = 0;
-		maxY_aliens = 0;
+		// Initialize maxX_aliens and minX_aliens to invalid values
+		maxX_aliens = -1;
+		minX_aliens = aliens.length;
 
 		for (int i = 0; i < aliens.length; i++) {
-			if (aliens[i].position.x > maxX_aliens) maxX_aliens = i;
-			if (aliens[i].position.x < minX_aliens) minX_aliens = i;
+			if (aliens[i].alive) {
+				// Update maxX_aliens and minX_aliens
+				if (i > maxX_aliens) maxX_aliens = i;
+				if (i < minX_aliens) minX_aliens = i;
+			}
 		}
 
 		// Check edge conditions before updating offset_aliens
 		if (aliens[maxX_aliens].position.x + aliens[maxX_aliens].sprite.getWidth() >= Gdx.graphics.getWidth()) {
-			direction_aliens = -1;
-			for (Alien alien : aliens) {
-				alien.position.y -= spacing; // drop down one level
-			}
+			toggleDirection();
+			dropdown();
+			speedup();
 		}
 		if (aliens[minX_aliens].position.x <= 0) {
-			direction_aliens = 1;
-			for (Alien alien : aliens) {
-				alien.position.y -= spacing; // drop down one level
-			}
+			toggleDirection();
+			dropdown();
+			speedup();
 		}
 
 		// Then update offset_aliens
 		offset_aliens.x = direction_aliens * speed_aliens;
 
+		// Check if all aliens are dead or alive while iterating
 		boolean all_dead = true;
-
 		for (int i = 0; i < aliens.length; i++) {
 			if (aliens[i].alive) {
 				aliens[i].position.add(offset_aliens);
+				// Check if the alien overlaps the player (it also must be alive as guaranteed by the previous block)
+				if (checkPlayerDeath(aliens[i])) {
+					Gdx.app.exit();
+				}
 				aliens[i].Draw(batch);
 				all_dead = false;
 			}
 		}
 
+		// Recreate aliens if all are dead
 		if (all_dead)
 			createAliens(img_alien);
 
@@ -104,13 +108,31 @@ public class PlanetDefender extends ApplicationAdapter {
 		for (int y = 0; y < height_aliens; y++) {
 			for (int x = 0; x < width_aliens; x++) {
 				Vector2 position = new Vector2(x * spacing, y * spacing);
-				position.x += Gdx.graphics.getWidth()/2;
+				position.x += (float) Gdx.graphics.getWidth() /2;
 				position.y += Gdx.graphics.getHeight();
-				position.x -= (width_aliens/2) * spacing;
+				position.x -= ((float) width_aliens /2) * spacing;
 				position.y -= height_aliens * spacing;
 				aliens[i] = new Alien(position, img_alien);
 				i++;
 			}
 		}
+	}
+
+	private boolean checkPlayerDeath(Alien alien) {
+		return alien.sprite.getBoundingRectangle().overlaps(player.sprite.getBoundingRectangle());
+	}
+
+	private void speedup() {
+		speed_aliens *= 1.1f;
+	}
+
+	private void dropdown() {
+		for (Alien alien : aliens) {
+			alien.position.y -= spacing; // drop down one level
+		}
+	}
+
+	private void toggleDirection() {
+		direction_aliens *= -1;
 	}
 }
