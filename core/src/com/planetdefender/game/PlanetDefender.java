@@ -85,7 +85,9 @@ public class PlanetDefender extends ApplicationAdapter {
 		// Recreate aliens if all are dead
 		if (allDead()) {
 			wave++;
-			img_alien = new Texture(waves[wave]+"-03.png");
+			if (wave < waves.length) {
+				img_alien = new Texture(waves[wave]+"-03.png");
+			}
 			createAliens(img_alien);
 		}
 
