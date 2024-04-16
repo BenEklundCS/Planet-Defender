@@ -15,7 +15,7 @@ public class GridOfAliens {
     private int direction_aliens = 1;
     private float speed_aliens = 4.0f;
     private Vector2 offset_aliens;
-    private String[] waves = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j"};
+    private final String[] waves = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j"};
     private int wave = 0;
     private Texture img_alien;
     private SpriteBatch batch;
@@ -29,9 +29,9 @@ public class GridOfAliens {
 
         this.batch = batch; // dependancy injection per update
 
-        for (int i = 0; i < aliens.length; i++) {
-            if (Spot.player.sprite_bullet.getBoundingRectangle().overlaps(aliens[i].sprite.getBoundingRectangle()) && aliens[i].alive) {
-                aliens[i].alive = false;
+        for (Alien alien : aliens) {
+            if (Spot.player.sprite_bullet.getBoundingRectangle().overlaps(alien.sprite.getBoundingRectangle()) && alien.alive) {
+                alien.alive = false;
                 Spot.player.position_bullet.y += 10000;
             }
         }
@@ -126,6 +126,8 @@ public class GridOfAliens {
     }
 
     private boolean checkPlayerDeath(Alien alien) {
-        return alien.sprite.getBoundingRectangle().overlaps(Spot.player.sprite.getBoundingRectangle());
+        boolean contact = alien.sprite.getBoundingRectangle().overlaps(Spot.player.sprite.getBoundingRectangle());
+        boolean position = alien.position.y < Spot.player.position.y;
+        return contact || position;
     }
 }
