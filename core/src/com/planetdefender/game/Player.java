@@ -14,10 +14,10 @@ public class Player {
     public Sprite sprite;
     public Sprite sprite_bullet;
     public float speed = 500f;
-    public float bullet_speed = 1200f;
-    private float bullet_offset = 16f;
-    private float player_scale = 0.5f;
-    private float bullet_scale = 2.0f;
+    public float bullet_speed = 1200.0f;
+    private final float bullet_offset = 16.0f;
+    private final float player_scale = 0.5f;
+    private final float bullet_scale = 2.0f;
 
     public Player(Texture img, Texture img_bullet) {
         sprite = new Sprite(img);

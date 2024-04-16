@@ -20,8 +20,10 @@ public class PlanetDefender extends ApplicationAdapter {
 	private int minX_aliens = 10000;
 	private int maxX_aliens = 0;
 	private int direction_aliens = 1;
-	private float speed_aliens = 3.0f;
-	public Vector2 offset_aliens;
+	private float speed_aliens = 4.0f;
+	private Vector2 offset_aliens;
+	private String[] waves = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j"};
+	private int wave = 0;
 	
 	@Override
 	public void create () {
@@ -29,7 +31,7 @@ public class PlanetDefender extends ApplicationAdapter {
 		img = new Texture("e-01.png");
 		img_bullet = new Texture("blue.png");
 		player = new Player(img, img_bullet);
-		img_alien = new Texture("f-03.png");
+		img_alien = new Texture("a-03.png");
 		createAliens(img_alien);
 	}
 
@@ -40,6 +42,7 @@ public class PlanetDefender extends ApplicationAdapter {
 		batch.begin();
 
 		player.Draw(batch);
+
 		for (int i = 0; i < aliens.length; i++) {
 			if (player.sprite_bullet.getBoundingRectangle().overlaps(aliens[i].sprite.getBoundingRectangle()) && aliens[i].alive) {
 				aliens[i].alive = false;
@@ -47,15 +50,20 @@ public class PlanetDefender extends ApplicationAdapter {
 			}
 		}
 
-		// Initialize maxX_aliens and minX_aliens to invalid values
-		maxX_aliens = -1;
-		minX_aliens = aliens.length;
+		// Initialize rightmost and leftmost to invalid values, and use them to set maxX_aliens and minX_aliens
+		float rightmost = 0;
+		float leftmost = Gdx.graphics.getWidth();
 
 		for (int i = 0; i < aliens.length; i++) {
 			if (aliens[i].alive) {
-				// Update maxX_aliens and minX_aliens
-				if (i > maxX_aliens) maxX_aliens = i;
-				if (i < minX_aliens) minX_aliens = i;
+				if (aliens[i].position.x > rightmost) {
+					rightmost = aliens[i].position.x;
+					maxX_aliens = i;
+				}
+				if (aliens[i].position.x < leftmost) {
+					leftmost = aliens[i].position.x;
+					minX_aliens = i;
+				}
 			}
 		}
 
@@ -74,23 +82,13 @@ public class PlanetDefender extends ApplicationAdapter {
 		// Then update offset_aliens
 		offset_aliens.x = direction_aliens * speed_aliens;
 
-		// Check if all aliens are dead or alive while iterating
-		boolean all_dead = true;
-		for (int i = 0; i < aliens.length; i++) {
-			if (aliens[i].alive) {
-				aliens[i].position.add(offset_aliens);
-				// Check if the alien overlaps the player (it also must be alive as guaranteed by the previous block)
-				if (checkPlayerDeath(aliens[i])) {
-					Gdx.app.exit();
-				}
-				aliens[i].Draw(batch);
-				all_dead = false;
-			}
+		// Recreate aliens if all are dead
+		if (allDead()) {
+			wave++;
+			img_alien = new Texture(waves[wave]+"-03.png");
+			createAliens(img_alien);
 		}
 
-		// Recreate aliens if all are dead
-		if (all_dead)
-			createAliens(img_alien);
 
 		batch.end();
 	}
@@ -123,7 +121,7 @@ public class PlanetDefender extends ApplicationAdapter {
 	}
 
 	private void speedup() {
-		speed_aliens *= 1.1f;
+		speed_aliens *= 1.05f;
 	}
 
 	private void dropdown() {
@@ -134,5 +132,21 @@ public class PlanetDefender extends ApplicationAdapter {
 
 	private void toggleDirection() {
 		direction_aliens *= -1;
+	}
+
+	private boolean allDead() {
+		boolean all_dead = true;
+        for (Alien alien : aliens) {
+            if (alien.alive) {
+                alien.position.add(offset_aliens);
+                // Check if the alien overlaps the player (it also must be alive as guaranteed by the previous block)
+                if (checkPlayerDeath(alien)) {
+                    Gdx.app.exit();
+                }
+                alien.Draw(batch);
+                all_dead = false;
+            }
+        }
+		return all_dead;
 	}
 }
