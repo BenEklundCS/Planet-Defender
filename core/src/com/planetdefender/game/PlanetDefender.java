@@ -10,15 +10,13 @@ import com.badlogic.gdx.utils.ScreenUtils;
 public class PlanetDefender extends ApplicationAdapter {
 	private SpriteBatch batch;
 	private Texture img;
-	private Texture img_bullet;
 	private GridOfAliens aliens;
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		img = new Texture("e-01.png");
-		img_bullet = new Texture("blue.png");
-		Spot.player = new Player(img, img_bullet);
+		Spot.player = new Player(img);
 		aliens = new GridOfAliens(new Texture("a-03.png"));
 	}
 

@@ -7,9 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class GridOfAliens {
     private Alien[] aliens;
-    private int width_aliens = 10;
-    private int height_aliens = 4;
-    private int spacing = 100;
+    private final int spacing = 100;
     private int minX_aliens = 10000;
     private int maxX_aliens = 0;
     private int direction_aliens = 1;
@@ -29,37 +27,13 @@ public class GridOfAliens {
 
         this.batch = batch; // dependancy injection per update
 
-        for (Alien alien : aliens) {
-            if (Spot.player.sprite_bullet.getBoundingRectangle().overlaps(alien.sprite.getBoundingRectangle()) && alien.alive) {
-                alien.alive = false;
-                Spot.player.position_bullet.y += 10000;
-            }
-        }
+        checkBulletCollisions();
 
         // Initialize rightmost and leftmost to invalid values, and use them to set maxX_aliens and minX_aliens
-        float rightmost = 0;
-        float leftmost = Gdx.graphics.getWidth();
-
-        for (int i = 0; i < aliens.length; i++) {
-            if (aliens[i].alive) {
-                if (aliens[i].position.x > rightmost) {
-                    rightmost = aliens[i].position.x;
-                    maxX_aliens = i;
-                }
-                if (aliens[i].position.x < leftmost) {
-                    leftmost = aliens[i].position.x;
-                    minX_aliens = i;
-                }
-            }
-        }
+        setAlienDimensions();
 
         // Check edge conditions before updating offset_aliens
-        if (aliens[maxX_aliens].position.x + aliens[maxX_aliens].sprite.getWidth() >= Gdx.graphics.getWidth()) {
-            toggleDirection();
-            dropdown();
-            speedup();
-        }
-        if (aliens[minX_aliens].position.x <= 0) {
+        if (hitLeftEdge() || hitRightEdge()) {
             toggleDirection();
             dropdown();
             speedup();
@@ -70,15 +44,14 @@ public class GridOfAliens {
 
         // Recreate aliens if all are dead
         if (allDead()) {
-            wave++;
-            if (wave < waves.length) {
-                img_alien = new Texture(waves[wave]+"-03.png");
-            }
+            changeImage();
             createAliens(img_alien);
         }
     }
 
     private void createAliens(Texture img_alien) {
+        int height_aliens = 4;
+        int width_aliens = 10;
         aliens = new Alien[width_aliens * height_aliens];
         offset_aliens = new Vector2(speed_aliens, 0);
         int i = 0;
@@ -129,5 +102,47 @@ public class GridOfAliens {
         boolean contact = alien.sprite.getBoundingRectangle().overlaps(Spot.player.sprite.getBoundingRectangle());
         boolean position = alien.position.y < Spot.player.position.y;
         return contact || position;
+    }
+
+    private void checkBulletCollisions() {
+        for (Alien alien : aliens) {
+            if (Spot.player.sprite_bullet.getBoundingRectangle().overlaps(alien.sprite.getBoundingRectangle()) && alien.alive) {
+                alien.alive = false;
+                Spot.player.position_bullet.y += 10000;
+            }
+        }
+    }
+
+    private boolean hitRightEdge() {
+        return aliens[maxX_aliens].position.x + aliens[maxX_aliens].sprite.getWidth() >= Gdx.graphics.getWidth();
+    }
+
+    private boolean hitLeftEdge() {
+        return aliens[minX_aliens].position.x <= 0;
+    }
+
+    private void changeImage() {
+        wave++;
+        if (wave < waves.length) {
+            img_alien = new Texture(waves[wave]+"-03.png");
+        }
+    }
+
+    private void setAlienDimensions() {
+        float rightmost = 0;
+        float leftmost = Gdx.graphics.getWidth();
+
+        for (int i = 0; i < aliens.length; i++) {
+            if (aliens[i].alive) {
+                if (aliens[i].position.x > rightmost) {
+                    rightmost = aliens[i].position.x;
+                    maxX_aliens = i;
+                }
+                if (aliens[i].position.x < leftmost) {
+                    leftmost = aliens[i].position.x;
+                    minX_aliens = i;
+                }
+            }
+        }
     }
 }
