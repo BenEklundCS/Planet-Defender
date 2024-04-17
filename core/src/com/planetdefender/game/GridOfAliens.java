@@ -17,15 +17,17 @@ public class GridOfAliens {
     private int wave = 0;
     private Texture img_alien;
     private SpriteBatch batch;
+    private Player player;
+    private boolean game_over = false;
 
-    public GridOfAliens(Texture img_alien) {
+    public GridOfAliens(Texture img_alien, SpriteBatch batch, Player player) {
         this.img_alien = img_alien;
+        this.batch = batch;
+        this.player = player;
         createAliens(img_alien);
     }
 
-    public void Update(SpriteBatch batch) {
-
-        this.batch = batch; // dependancy injection per update
+    public void Update() {
 
         checkBulletCollisions();
 
@@ -43,7 +45,7 @@ public class GridOfAliens {
         offset_aliens.x = direction_aliens * speed_aliens;
 
         // Recreate aliens if all are dead
-        if (allDead()) {
+        if (whosDead()) {
             changeImage();
             createAliens(img_alien);
         }
@@ -82,14 +84,14 @@ public class GridOfAliens {
         direction_aliens *= -1;
     }
 
-    private boolean allDead() {
+    private boolean whosDead() {
         boolean all_dead = true;
         for (Alien alien : aliens) {
             if (alien.alive) {
                 alien.position.add(offset_aliens);
                 // Check if the alien overlaps the player (it also must be alive as guaranteed by the previous block)
                 if (checkPlayerDeath(alien)) {
-                    Gdx.app.exit();
+                    game_over = true;
                 }
                 alien.Draw(batch);
                 all_dead = false;
@@ -99,16 +101,16 @@ public class GridOfAliens {
     }
 
     private boolean checkPlayerDeath(Alien alien) {
-        boolean contact = alien.sprite.getBoundingRectangle().overlaps(Spot.player.sprite.getBoundingRectangle());
-        boolean position = alien.position.y < Spot.player.position.y;
+        boolean contact = alien.sprite.getBoundingRectangle().overlaps(player.sprite.getBoundingRectangle());
+        boolean position = alien.position.y < player.position.y;
         return contact || position;
     }
 
     private void checkBulletCollisions() {
         for (Alien alien : aliens) {
-            if (Spot.player.sprite_bullet.getBoundingRectangle().overlaps(alien.sprite.getBoundingRectangle()) && alien.alive) {
+            if (player.sprite_bullet.getBoundingRectangle().overlaps(alien.sprite.getBoundingRectangle()) && alien.alive) {
                 alien.alive = false;
-                Spot.player.position_bullet.y += 10000;
+                player.position_bullet.y += 10000;
             }
         }
     }
@@ -144,5 +146,9 @@ public class GridOfAliens {
                 }
             }
         }
+    }
+
+    public boolean isGameOver() {
+        return game_over;
     }
 }

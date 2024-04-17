@@ -1,23 +1,27 @@
 package com.planetdefender.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-public class PlanetDefender extends ApplicationAdapter {
+public class PlanetDefender extends Game {
 	private SpriteBatch batch;
 	private Texture img;
 	private GridOfAliens aliens;
-	
+	private Player player;
+	private GameOverScreen gameOverScreen;
+
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		img = new Texture("e-01.png");
-		Spot.player = new Player(img);
-		aliens = new GridOfAliens(new Texture("a-03.png"));
+		player = new Player(img);
+		aliens = new GridOfAliens(new Texture("a-03.png"), batch, player);
+		gameOverScreen = new GameOverScreen();
 	}
 
 	@Override
@@ -26,9 +30,13 @@ public class PlanetDefender extends ApplicationAdapter {
 
 		batch.begin();
 
-		Spot.player.Draw(batch);
+		player.Draw(batch);
 
-		aliens.Update(batch);
+		aliens.Update();
+
+		if (aliens.isGameOver()) {
+			gameOver();
+		}
 
 		batch.end();
 	}
@@ -37,5 +45,10 @@ public class PlanetDefender extends ApplicationAdapter {
 	public void dispose () {
 		batch.dispose();
 		img.dispose();
+	}
+
+	public void gameOver() {
+		setScreen(gameOverScreen);
+		Gdx.app.exit();
 	}
 }
