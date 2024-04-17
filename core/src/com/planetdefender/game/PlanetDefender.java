@@ -3,6 +3,9 @@ package com.planetdefender.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.planetdefender.game.entities.Player;
+import com.planetdefender.game.screens.GameOverScreen;
+import com.planetdefender.game.screens.GameScreen;
 
 public class PlanetDefender extends Game {
 	private SpriteBatch batch;

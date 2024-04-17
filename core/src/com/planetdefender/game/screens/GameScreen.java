@@ -1,9 +1,12 @@
-package com.planetdefender.game;
+package com.planetdefender.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.planetdefender.game.GridOfAliens;
+import com.planetdefender.game.PlanetDefender;
+import com.planetdefender.game.entities.Player;
 
 public class GameScreen implements Screen {
     private final Player player;
