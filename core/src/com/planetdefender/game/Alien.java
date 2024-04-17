@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 public class Alien {
+    // Don't care if these are changed elsewhere, the aliens are individual and their state is public
     public Vector2 position;
     public Vector2 initial_position;
     public Sprite sprite;

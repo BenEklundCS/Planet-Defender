@@ -30,6 +30,8 @@ public class PlanetDefender extends Game {
 	}
 
 	public void gameOver() {
+		int kills = player.getKills();
+		gameOverScreen.setKills(kills);
 		setScreen(gameOverScreen);
 	}
 }

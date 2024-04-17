@@ -11,7 +11,7 @@ public class GridOfAliens {
     private int minX_aliens = 10000;
     private int maxX_aliens = 0;
     private int direction_aliens = 1;
-    private float speed_aliens = 40.0f;
+    private float speed_aliens = 15.0f;
     private Vector2 offset_aliens;
     private final String[] waves = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j"};
     private int wave = 0;
@@ -100,8 +100,8 @@ public class GridOfAliens {
     }
 
     private void checkPlayerDeath(Alien alien) {
-        boolean contact = alien.sprite.getBoundingRectangle().overlaps(player.sprite.getBoundingRectangle());
-        boolean position = alien.position.y < player.position.y;
+        boolean contact = alien.sprite.getBoundingRectangle().overlaps(player.getSprite().getBoundingRectangle());
+        boolean position = alien.position.y < 0; // 0 bottom of the screen
         if (contact || position) {
             game_over = true;
         }
@@ -109,9 +109,10 @@ public class GridOfAliens {
 
     private void checkBulletCollisions() {
         for (Alien alien : aliens) {
-            if (player.sprite_bullet.getBoundingRectangle().overlaps(alien.sprite.getBoundingRectangle()) && alien.alive) {
+            if (player.getSprite_bullet().getBoundingRectangle().overlaps(alien.sprite.getBoundingRectangle()) && alien.alive) {
                 alien.alive = false;
-                player.position_bullet.y += 10000;
+                player.setKills();
+                player.getPosition_bullet().y += 10000;
             }
         }
     }

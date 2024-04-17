@@ -8,15 +8,16 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 public class Player {
-    public Vector2 position;
-    public Vector2 position_bullet;
-    public Sprite sprite;
-    public Sprite sprite_bullet;
-    public float speed = 500f;
-    public float bullet_speed = 1200.0f;
+    private Vector2 position;
+    private Vector2 position_bullet;
+    private Sprite sprite;
+    private Sprite sprite_bullet;
+    private float speed = 500f;
+    private float bullet_speed = 1200.0f;
     private final float bullet_offset = -20.0f;
     private final float player_scale = 0.5f;
     private final float bullet_scale = 2.0f;
+    private int kills = 0;
 
     public Player(Texture img) {
         sprite = new Sprite(img);
@@ -91,5 +92,25 @@ public class Player {
 
     private void movePlayerRight(float deltaTime) {
         position.x += deltaTime*speed;
+    }
+
+    public void setKills() {
+        this.kills++;
+    }
+
+    public int getKills() {
+        return kills;
+    }
+
+    public Vector2 getPosition_bullet() {
+        return position_bullet;
+    }
+
+    public Sprite getSprite() {
+        return sprite;
+    }
+
+    public Sprite getSprite_bullet() {
+        return sprite_bullet;
     }
 }

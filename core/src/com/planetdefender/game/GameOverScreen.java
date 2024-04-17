@@ -11,6 +11,9 @@ public class GameOverScreen implements Screen {
     private final SpriteBatch batch;
     private final BitmapFont font;
 
+    private int kills;
+    private final int offset = 300;
+
     public GameOverScreen(SpriteBatch batch) {
         this.batch = batch;
         font = new BitmapFont();
@@ -24,7 +27,9 @@ public class GameOverScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
-        font.draw(batch, "GAME OVER", Gdx.graphics.getWidth() / 4f, Gdx.graphics.getHeight() / 2f);
+        font.draw(batch, "GAME OVER", (Gdx.graphics.getWidth() / 4f) - offset, Gdx.graphics.getHeight() / 2f);
+
+        font.draw(batch, "YOU KILLED " + kills + " ALIENS!", (Gdx.graphics.getWidth() / 4f) - offset, (Gdx.graphics.getHeight() / 2f) - offset);
         batch.end();
     }
 
@@ -37,5 +42,9 @@ public class GameOverScreen implements Screen {
     @Override public void dispose() {
         batch.dispose();
         font.dispose();
+    }
+
+    public void setKills(int kills) {
+        this.kills = kills;
     }
 }
