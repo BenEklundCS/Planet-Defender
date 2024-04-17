@@ -27,17 +27,15 @@ public class Player {
         position_bullet = new Vector2(0, 10000); // just start the bullet offscreen somewhere
     }
 
-    public void Update(float deltaTime) {
-        if (bulletShouldReset()) {
-            resetBullet();
-        }
+    public void Update(float deltaTime) { // pass deltaTime to any "move" methods to determine how far they should move.
+        // Bullet reset (fire on SPACEBAR)
+        if (bulletShouldReset()) resetBullet();
         // Player movement
         if (playerInputA()) movePlayerLeft(deltaTime); // move left on A
         if (playerInputD()) movePlayerRight(deltaTime); // move right on D
-        if (hitLeftBound()) // left bound
-            leftBound();
-        if (hitRightBound()) // right bound
-            rightBound();
+        // Player boundaries
+        if (hitLeftBound()) leftBound(); // left bound
+        if (hitRightBound()) rightBound();// right bound
         // Bullet movement
         moveBullet(deltaTime);
     }

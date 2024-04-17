@@ -11,7 +11,7 @@ public class GridOfAliens {
     private int minX_aliens = 10000;
     private int maxX_aliens = 0;
     private int direction_aliens = 1;
-    private float speed_aliens = 4.0f;
+    private float speed_aliens = 40.0f;
     private Vector2 offset_aliens;
     private final String[] waves = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j"};
     private int wave = 0;
@@ -45,10 +45,8 @@ public class GridOfAliens {
         offset_aliens.x = direction_aliens * speed_aliens;
 
         // Recreate aliens if all are dead
-        if (whosDead()) {
-            changeImage();
-            createAliens(img_alien);
-        }
+
+        renderAliens();
     }
 
     private void createAliens(Texture img_alien) {
@@ -70,6 +68,23 @@ public class GridOfAliens {
         }
     }
 
+    private void renderAliens() {
+        boolean all_dead = true;
+        for (Alien alien : aliens) {
+            if (alien.alive) {
+                alien.position.add(offset_aliens);
+                // Check if the alien overlaps the player (it also must be alive as guaranteed by the previous block)
+                checkPlayerDeath(alien);
+                alien.Draw(batch);
+                all_dead = false;
+            }
+        }
+        if (all_dead) {
+            changeImage();
+            createAliens(img_alien);
+        }
+    }
+
     private void speedup() {
         speed_aliens *= 1.05f;
     }
@@ -84,26 +99,12 @@ public class GridOfAliens {
         direction_aliens *= -1;
     }
 
-    private boolean whosDead() {
-        boolean all_dead = true;
-        for (Alien alien : aliens) {
-            if (alien.alive) {
-                alien.position.add(offset_aliens);
-                // Check if the alien overlaps the player (it also must be alive as guaranteed by the previous block)
-                if (checkPlayerDeath(alien)) {
-                    game_over = true;
-                }
-                alien.Draw(batch);
-                all_dead = false;
-            }
-        }
-        return all_dead;
-    }
-
-    private boolean checkPlayerDeath(Alien alien) {
+    private void checkPlayerDeath(Alien alien) {
         boolean contact = alien.sprite.getBoundingRectangle().overlaps(player.sprite.getBoundingRectangle());
         boolean position = alien.position.y < player.position.y;
-        return contact || position;
+        if (contact || position) {
+            game_over = true;
+        }
     }
 
     private void checkBulletCollisions() {
