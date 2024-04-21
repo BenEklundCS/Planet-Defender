@@ -4,10 +4,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.planetdefender.game.rendering.RenderUtils;
-import sun.jvm.hotspot.opto.RegionNode;
 
-import static com.planetdefender.game.Spot.textureManager;
+import static com.planetdefender.game.Spot.*;
 
 public class Bullet implements Entity {
     private final Vector2 position;
@@ -15,7 +13,7 @@ public class Bullet implements Entity {
     private final float offset = 45.0f;
 
     public Bullet(Vector2 position) {
-        TextureRegion bulletTexture = RenderUtils.bulletTexture();
+        TextureRegion bulletTexture = textureManager.getTexture("player_bullet");
         sprite = new Sprite(bulletTexture);
         float scale = 6.0f;
         sprite.setScale(scale);

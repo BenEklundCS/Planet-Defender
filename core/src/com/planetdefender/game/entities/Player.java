@@ -1,15 +1,14 @@
 package com.planetdefender.game.entities;
-import static com.planetdefender.game.Spot.*;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.planetdefender.game.events.BoundaryChecker;
 import com.planetdefender.game.events.InputHandler;
-import com.planetdefender.game.rendering.RenderUtils;
+
+import static com.planetdefender.game.Spot.*;
 
 public class Player implements Entity {
     private final Vector2 position;
@@ -20,7 +19,7 @@ public class Player implements Entity {
 
     public Player() {
         // Player sprite generation
-        TextureRegion playerTexture = RenderUtils.playerTexture();
+        TextureRegion playerTexture = textureManager.getTexture("player");
         sprite = new Sprite(playerTexture);
         float player_scale = 6.0f;
         sprite.rotate(180);

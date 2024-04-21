@@ -3,6 +3,7 @@ package com.planetdefender.game.rendering;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import com.planetdefender.game.entities.Alien;
+import static com.planetdefender.game.Spot.*;
 
 public class AlienGridRenderer {
     private final AlienGridManager alienGridManager;
@@ -42,16 +43,16 @@ public class AlienGridRenderer {
     private void renderForRound() {
         switch (round) {
             case 0:
-                alienGridManager.setAlienTexture(RenderUtils.blueAliens());
+                alienGridManager.setAlienTexture(textureManager.getTexture("blue_alien"));
                 break;
             case 1:
-                alienGridManager.setAlienTexture(RenderUtils.redAliens());
+                alienGridManager.setAlienTexture(textureManager.getTexture("red_alien"));
                 break;
             case 2:
-                alienGridManager.setAlienTexture(RenderUtils.pinkAliens());
+                alienGridManager.setAlienTexture(textureManager.getTexture("pink_alien"));
                 break;
             case 3:
-                alienGridManager.setAlienTexture(RenderUtils.grayAliens());
+                alienGridManager.setAlienTexture(textureManager.getTexture("gray_alien"));
                 break;
         }
     }

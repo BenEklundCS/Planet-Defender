@@ -7,6 +7,8 @@ import com.planetdefender.game.entities.Alien;
 import com.planetdefender.game.entities.Player;
 import com.planetdefender.game.events.BoundaryChecker;
 
+import static com.planetdefender.game.Spot.*;
+
 public class AlienGridManager {
     private Alien[] aliens;
     private final int spacing = 100;
@@ -21,7 +23,7 @@ public class AlienGridManager {
     public boolean game_over = false;
 
     public AlienGridManager(Player player) {
-        this.alienTexture = RenderUtils.blueAliens();
+        this.alienTexture = textureManager.getTexture("blue_alien");
         this.player = player;
         createAliens(alienTexture);
     }
