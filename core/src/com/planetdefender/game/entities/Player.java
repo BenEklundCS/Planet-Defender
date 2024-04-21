@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.planetdefender.game.events.BoundaryChecker;
 import com.planetdefender.game.events.InputHandler;
+import com.planetdefender.game.rendering.RenderUtils;
 
 public class Player implements Entity {
     private final Vector2 position;
@@ -19,18 +20,11 @@ public class Player implements Entity {
 
     public Player() {
         // Player sprite generation
-        int ship_width = 16, ship_height = 16;
-        int ship_x = 31, ship_y = 64;
-        String ship_path = "SpaceShooterAssets/SpaceShooterAssetPack_Ships.png";
-        textureManager.loadTexture("player", ship_path, ship_x, ship_y, ship_width, ship_height);
-        TextureRegion playerTexture = textureManager.getTexture("player");
+        TextureRegion playerTexture = RenderUtils.playerTexture();
         sprite = new Sprite(playerTexture);
         float player_scale = 6.0f;
         sprite.rotate(180);
         sprite.setScale(player_scale);
-
-
-
         // Positioning
         float player_y_offset = 50f;
         position = new Vector2((float) Gdx.graphics.getWidth()/2 - sprite.getWidth() * sprite.getScaleX()/2, sprite.getScaleY() + player_y_offset);
@@ -38,15 +32,25 @@ public class Player implements Entity {
     }
 
     public void Update(float deltaTime) { // pass deltaTime to any "move" methods to determine how far they should move.
+        handleInput(deltaTime);
+        // Player boundaries
+        checkBoundaries();
+        // Bullet movement
+        bullet.move(deltaTime);
+    }
+
+    private void handleInput(float deltaTime) {
         InputHandler inputHandler = new InputHandler();
         // Bullet reset (fire on SPACEBAR)
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && bullet.getPosition().y > Gdx.graphics.getHeight()) {
+        if (inputHandler.isSpaceJustPressed() && bullet.getPosition().y > Gdx.graphics.getHeight()) {
             bullet.reset(position);
         }
         // Player movement
         if (inputHandler.isLeftPressed()) movePlayerLeft(deltaTime); // move left on A
         if (inputHandler.isRightPressed()) movePlayerRight(deltaTime); // move right on D
-        // Player boundaries
+    }
+
+    private void checkBoundaries() {
         BoundaryChecker boundaryChecker = new BoundaryChecker(0, Gdx.graphics.getWidth());
         if (boundaryChecker.isOutOfLeftBound(position, sprite.getWidth() * sprite.getScaleX())) {
             position.x = sprite.getWidth() * sprite.getScaleX();
@@ -55,8 +59,6 @@ public class Player implements Entity {
         if (boundaryChecker.isOutOfRightBound(position, sprite.getWidth() * sprite.getScaleX() / right_bound_offset)) {
             position.x = Gdx.graphics.getWidth() - sprite.getWidth() * sprite.getScaleX() / right_bound_offset;
         }
-        // Bullet movement
-        bullet.move(deltaTime);
     }
 
     public void Draw(SpriteBatch batch) {

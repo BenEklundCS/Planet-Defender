@@ -34,5 +34,6 @@ public class TextureManager {
         for (TextureRegion region : textures.values()) {
             region.getTexture().dispose();
         }
+        textures.clear();
     }
 }
