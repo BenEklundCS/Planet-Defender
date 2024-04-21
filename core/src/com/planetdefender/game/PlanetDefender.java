@@ -13,21 +13,17 @@ import static com.planetdefender.game.Spot.*;
 public class PlanetDefender extends Game {
 	private SpriteBatch batch;
 	private Player player;
-	private GameScreen gameScreen;
-	private AlienGridRenderer gridRenderer;
-	private AlienGridManager gridManager;
 	private GameOverScreen gameOverScreen;
-	private Background background;
 
 	@Override
 	public void create () {
 		textureManager = new TextureManager();
 		batch = new SpriteBatch();
 		player = new Player();
-		gridManager = new AlienGridManager(player);
-		gridRenderer = new AlienGridRenderer(gridManager, batch);
-		background = new Background();
-		gameScreen = new GameScreen(background, player, gridRenderer, gridManager, batch);
+		AlienGridManager gridManager = new AlienGridManager(player);
+		AlienGridRenderer gridRenderer = new AlienGridRenderer(gridManager, batch);
+		Background background = new Background();
+		GameScreen gameScreen = new GameScreen(background, player, gridRenderer, gridManager, batch);
 		gameOverScreen = new GameOverScreen(batch);
 		setScreen(gameScreen);
 	}
