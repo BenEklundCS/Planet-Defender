@@ -17,7 +17,7 @@ public class GridOfAliens {
     private int minX_aliens = 10000;
     private int maxX_aliens = 0;
     private int direction_aliens = 1;
-    private float speed_aliens = 4.0f;
+    private float speed_aliens = 16.0f;
     private Vector2 offset_aliens;
     private final String[] waves = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j"};
     private int wave = 0;

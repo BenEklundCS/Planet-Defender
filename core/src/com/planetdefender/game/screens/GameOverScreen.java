@@ -6,15 +6,18 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.planetdefender.game.entities.Background;
 
 public class GameOverScreen implements Screen {
     private final SpriteBatch batch;
     private final BitmapFont font;
     private int kills;
     private final int offset = 300;
+    private Background background;
 
     public GameOverScreen(SpriteBatch batch) {
         this.batch = batch;
+        background = new Background();
         font = new BitmapFont();
         font.setColor(Color.RED);
         font.getData().setScale(10); // Set the scale to 2
@@ -26,8 +29,8 @@ public class GameOverScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
+        background.Draw(batch);
         font.draw(batch, "GAME OVER", (Gdx.graphics.getWidth() / 4f) - offset, Gdx.graphics.getHeight() / 2f + offset);
-
         font.draw(batch, "YOU KILLED " + kills + " ALIENS!", (Gdx.graphics.getWidth() / 4f) - offset, (Gdx.graphics.getHeight() / 2f));
         batch.end();
     }
