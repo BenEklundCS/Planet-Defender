@@ -4,7 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.planetdefender.game.GridOfAliens;
+import com.planetdefender.game.entities.Background;
+import com.planetdefender.game.rendering.GridOfAliens;
 import com.planetdefender.game.PlanetDefender;
 import com.planetdefender.game.entities.Player;
 
@@ -12,8 +13,10 @@ public class GameScreen implements Screen {
     private final Player player;
     private final GridOfAliens aliens;
     private final SpriteBatch batch;
+    private final Background background;
 
-    public GameScreen(Player player, GridOfAliens aliens, SpriteBatch batch) {
+    public GameScreen(Background background, Player player, GridOfAliens aliens, SpriteBatch batch) {
+        this.background = background;
         this.player = player;
         this.aliens = aliens;
         this.batch = batch;
@@ -23,6 +26,7 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1);
         batch.begin();
+        background.Draw(batch);
         player.Draw(batch);
         aliens.Update();
         batch.end();

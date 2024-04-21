@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class GameOverScreen implements Screen {
     private final SpriteBatch batch;
     private final BitmapFont font;
-
     private int kills;
     private final int offset = 300;
 
@@ -27,9 +26,9 @@ public class GameOverScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
-        font.draw(batch, "GAME OVER", (Gdx.graphics.getWidth() / 4f) - offset, Gdx.graphics.getHeight() / 2f);
+        font.draw(batch, "GAME OVER", (Gdx.graphics.getWidth() / 4f) - offset, Gdx.graphics.getHeight() / 2f + offset);
 
-        font.draw(batch, "YOU KILLED " + kills + " ALIENS!", (Gdx.graphics.getWidth() / 4f) - offset, (Gdx.graphics.getHeight() / 2f) - offset);
+        font.draw(batch, "YOU KILLED " + kills + " ALIENS!", (Gdx.graphics.getWidth() / 4f) - offset, (Gdx.graphics.getHeight() / 2f));
         batch.end();
     }
 

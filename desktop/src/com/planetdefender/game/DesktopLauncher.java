@@ -8,7 +8,7 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
 		config.setTitle("Planet Defender");
-		config.setWindowedMode(1800, 1000);
+		config.setWindowedMode(2400, 1400);
 		new Lwjgl3Application(new PlanetDefender(), config);
 	}
 }
