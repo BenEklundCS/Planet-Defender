@@ -5,20 +5,23 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.planetdefender.game.entities.Background;
-import com.planetdefender.game.rendering.GridOfAliens;
+import com.planetdefender.game.rendering.AlienGridManager;
+import com.planetdefender.game.rendering.AlienGridRenderer;
 import com.planetdefender.game.PlanetDefender;
 import com.planetdefender.game.entities.Player;
 
 public class GameScreen implements Screen {
     private final Player player;
-    private final GridOfAliens aliens;
+    private final AlienGridRenderer renderer;
+    private final AlienGridManager manager;
     private final SpriteBatch batch;
     private final Background background;
 
-    public GameScreen(Background background, Player player, GridOfAliens aliens, SpriteBatch batch) {
+    public GameScreen(Background background, Player player, AlienGridRenderer renderer, AlienGridManager manager, SpriteBatch batch) {
         this.background = background;
         this.player = player;
-        this.aliens = aliens;
+        this.renderer = renderer;
+        this.manager = manager;
         this.batch = batch;
     }
 
@@ -28,10 +31,11 @@ public class GameScreen implements Screen {
         batch.begin();
         background.Draw(batch);
         player.Draw(batch);
-        aliens.Update();
+        manager.Update();
+        renderer.renderAliens();
         batch.end();
 
-        if (aliens.isGameOver()) {
+        if (renderer.isGameOver()) {
             ((PlanetDefender) Gdx.app.getApplicationListener()).gameOver();
         }
     }

@@ -25,7 +25,7 @@ public class Bullet implements Entity {
     }
 
     public void move(float deltaTime) {
-        float speed = 1200.0f;
+        float speed = 2500.0f;
         position.y += deltaTime * speed;
     }
 

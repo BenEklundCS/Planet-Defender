@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 public class Alien implements Entity {
     private final Vector2 position;
     private Sprite sprite;
+    private Sprite[] deathSprites;
     public boolean alive = true;
     public Alien(Vector2 position, TextureRegion alienTexture) {
         this.position = position;
@@ -22,6 +23,10 @@ public class Alien implements Entity {
     public void Draw(SpriteBatch batch) {
         sprite.setPosition(position.x, position.y);
         sprite.draw(batch);
+    }
+
+    public void deathDraw(SpriteBatch batch) {
+
     }
 
     @Override

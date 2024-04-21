@@ -13,19 +13,20 @@ import com.planetdefender.game.events.InputHandler;
 public class Player implements Entity {
     private final Vector2 position;
     private Sprite sprite;
-    private final float speed = 500f;
+    private final float speed = 900f;
     private int kills = 0;
     Bullet bullet;
 
     public Player() {
         // Player sprite generation
         int ship_width = 16, ship_height = 16;
-        int ship_x = 48, ship_y = 64;
+        int ship_x = 31, ship_y = 64;
         String ship_path = "SpaceShooterAssets/SpaceShooterAssetPack_Ships.png";
         textureManager.loadTexture("player", ship_path, ship_x, ship_y, ship_width, ship_height);
         TextureRegion playerTexture = textureManager.getTexture("player");
         sprite = new Sprite(playerTexture);
         float player_scale = 6.0f;
+        sprite.rotate(180);
         sprite.setScale(player_scale);
 
 

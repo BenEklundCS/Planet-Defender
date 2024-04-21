@@ -12,7 +12,7 @@ public class Background implements Entity {
     private final Vector2 position;
 
     public Background() {
-        String background_path = "Space Sprites/Space.png";
+        String background_path = "Space Sprites/Space_1.png";
         textureManager.loadTexture("background", background_path);
         TextureRegion backgroundTexture = textureManager.getTexture("background");
         sprite = new Sprite(backgroundTexture);
