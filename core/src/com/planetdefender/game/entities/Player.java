@@ -1,6 +1,7 @@
 package com.planetdefender.game.entities;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -41,13 +42,13 @@ public class Player implements Entity {
     private void handleInput(float deltaTime) {
         InputHandler inputHandler = new InputHandler();
         // Bullet reset (fire on SPACEBAR)
-        if (inputHandler.isSpaceJustPressed() && bullet.getPosition().y > Gdx.graphics.getHeight()) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && bullet.getPosition().y > Gdx.graphics.getHeight()) {
             bullet.reset(position);
         }
         // Player movement
-        if (inputHandler.isLeftPressed()) movePlayerLeft(deltaTime); // move left on A
-        if (inputHandler.isRightPressed()) movePlayerRight(deltaTime); // move right on D
-        if (inputHandler.isEscapeJustPressed()) Gdx.app.exit(); // exit on ESC
+        if (Gdx.input.isKeyPressed(Input.Keys.A)) movePlayerLeft(deltaTime); // move left on A
+        if (Gdx.input.isKeyPressed(Input.Keys.D)) movePlayerRight(deltaTime); // move right on D
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) Gdx.app.exit(); // exit on ESC
     }
 
     private void checkBoundaries() {
