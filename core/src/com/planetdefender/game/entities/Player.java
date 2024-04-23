@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.planetdefender.game.events.BoundaryChecker;
-import com.planetdefender.game.events.InputHandler;
 
 import static com.planetdefender.game.Spot.*;
 
@@ -40,7 +39,6 @@ public class Player implements Entity {
     }
 
     private void handleInput(float deltaTime) {
-        InputHandler inputHandler = new InputHandler();
         // Bullet reset (fire on SPACEBAR)
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && bullet.getPosition().y > Gdx.graphics.getHeight()) {
             bullet.reset(position);
