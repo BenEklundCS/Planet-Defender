@@ -34,19 +34,10 @@ public class AlienGridManager {
     }
 
     public void Update() {
-        fireBullets();
         checkBulletCollisions();
         setAlienDimensions();
         checkEdgeConditions();
         updateAlienOffsets();
-    }
-
-    public void fireBullets() {
-        for (Alien alien : aliens) {
-            if (random.nextFloat() < 0.5) { // Adjust the probability as needed
-                alien.fireBullet();
-            }
-        }
     }
 
     private void checkBulletCollisions() {

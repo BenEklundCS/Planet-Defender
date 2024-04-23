@@ -30,24 +30,6 @@ public class Alien implements Entity {
         sprite.setPosition(position.x, position.y);
         sprite.draw(batch);
     }
-    @Override
-    public void Update(float deltaTime) {
-        // ... other update code ...
-
-        // Update bullets
-        Iterator<Bullet> iterator = bullets.iterator();
-        while (iterator.hasNext()) {
-            Bullet bullet = iterator.next();
-            bullet.move(deltaTime);
-            if (bullet.getPosition().y < 0) {
-                iterator.remove();
-            }
-        }
-    }
-
-    public List<Bullet> getBullets() {
-        return bullets;
-    }
 
     @Override
     public Vector2 getPosition() {
@@ -67,10 +49,5 @@ public class Alien implements Entity {
     @Override
     public void setSprite(Sprite sprite) {
         this.sprite = sprite;
-    }
-
-    public void fireBullet() {
-        Bullet bullet = new Bullet(new Vector2(position.x, position.y), -2500f);
-        bullets.add(bullet);
     }
 }
