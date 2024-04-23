@@ -2,13 +2,17 @@ package com.planetdefender.game.rendering;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import com.badlogic.gdx.math.Vector2;
 import com.planetdefender.game.entities.Alien;
+import com.planetdefender.game.utils.Random;
+
 import static com.planetdefender.game.Spot.*;
 
 public class AlienGridRenderer {
     private final AlienGridManager alienGridManager;
     private final SpriteBatch batch;
     private int round = 0;
+    private boolean toggle = false;
 
     public AlienGridRenderer(AlienGridManager alienGridManager, SpriteBatch batch) {
         this.alienGridManager = alienGridManager;
@@ -32,7 +36,9 @@ public class AlienGridRenderer {
             }
             alienGridManager.resetSpeed();
             renderForRound();
-            alienGridManager.createAliens(alienGridManager.getAlienTexture());
+            Vector2 dimensions = Random.randomVector(4, 6, 2, 4);
+            alienGridManager.setDimensions(dimensions);
+            alienGridManager.createAliens();
         }
     }
 

@@ -19,4 +19,12 @@ public class BoundaryChecker {
     public boolean isOutOfRightBound(Vector2 position, float width) {
         return position.x + width >= rightBound;
     }
+
+    public boolean isOutOfTopBound(Vector2 position, float height) {
+        return position.y + height >= Gdx.graphics.getHeight();
+    }
+
+    public boolean isOutOfBottomBound(Vector2 position, float height) {
+        return position.y <= 0;
+    }
 }

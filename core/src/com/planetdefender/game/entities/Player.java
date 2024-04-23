@@ -47,6 +47,7 @@ public class Player implements Entity {
         // Player movement
         if (inputHandler.isLeftPressed()) movePlayerLeft(deltaTime); // move left on A
         if (inputHandler.isRightPressed()) movePlayerRight(deltaTime); // move right on D
+        if (inputHandler.isEscapeJustPressed()) Gdx.app.exit(); // exit on ESC
     }
 
     private void checkBoundaries() {

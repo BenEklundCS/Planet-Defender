@@ -18,6 +18,7 @@ public class AlienGridManager {
     private float speed_aliens = 8.0f;
     private float base_speed_aliens = 8.0f;
     private Vector2 offset_aliens;
+    private Vector2 dimensions;
     private TextureRegion alienTexture;
     private final Player player;
     public boolean game_over = false;
@@ -25,7 +26,8 @@ public class AlienGridManager {
     public AlienGridManager(Player player) {
         this.alienTexture = textureManager.getTexture("blue_alien");
         this.player = player;
-        createAliens(alienTexture);
+        this.dimensions = new Vector2(6, 4);
+        createAliens();
     }
 
     public void Update() {
@@ -101,9 +103,9 @@ public class AlienGridManager {
         offset_aliens.x = direction_aliens * speed_aliens;
     }
 
-    void createAliens(TextureRegion img_alien) {
-        int height_aliens = 4;
-        int width_aliens = 4;
+    void createAliens() {
+        int width_aliens = (int) dimensions.x;
+        int height_aliens = (int) dimensions.y;
         aliens = new Alien[width_aliens * height_aliens];
         offset_aliens = new Vector2(speed_aliens, 0);
         int i = 0;
@@ -114,7 +116,7 @@ public class AlienGridManager {
                 position.y += Gdx.graphics.getHeight();
                 position.x -= ((float) width_aliens /2) * spacing;
                 position.y -= height_aliens * spacing;
-                aliens[i] = new Alien(position, img_alien);
+                aliens[i] = new Alien(position, alienTexture);
                 i++;
             }
         }
@@ -144,5 +146,11 @@ public class AlienGridManager {
         return alienTexture;
     }
 
+    public Vector2 getDimensions() {
+        return dimensions;
+    }
 
+    public void setDimensions(Vector2 dimensions) {
+        this.dimensions = dimensions;
+    }
 }

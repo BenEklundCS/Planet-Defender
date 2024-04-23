@@ -15,4 +15,8 @@ public class InputHandler {
     public boolean isSpaceJustPressed() {
         return Gdx.input.isKeyJustPressed(Input.Keys.SPACE);
     }
+
+    public boolean isEscapeJustPressed() {
+        return Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE);
+    }
 }
