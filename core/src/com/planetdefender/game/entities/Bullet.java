@@ -11,17 +11,18 @@ public class Bullet implements Entity {
     private final Vector2 position;
     private Sprite sprite;
     private final float offset = 45.0f;
+    float speed;
 
-    public Bullet(Vector2 position) {
+    public Bullet(Vector2 position, float speed) {
         TextureRegion bulletTexture = textureManager.getTexture("player_bullet");
         sprite = new Sprite(bulletTexture);
         float scale = 6.0f;
+        this.speed = speed;
         sprite.setScale(scale);
         this.position = new Vector2(position.x - offset, 10000); // start the bullet offscreen somewhere
     }
 
     public void move(float deltaTime) {
-        float speed = 2500.0f;
         position.y += deltaTime * speed;
     }
 
@@ -41,6 +42,11 @@ public class Bullet implements Entity {
     @Override
     public Sprite getSprite() {
         return sprite;
+    }
+
+    @Override
+    public void Update(float deltaTime) {
+
     }
 
     @Override

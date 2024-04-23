@@ -26,6 +26,11 @@ public class Background implements Entity {
     }
 
     @Override
+    public void Update(float deltaTime) {
+
+    }
+
+    @Override
     public void setPosition(Vector2 position) {
         this.position.x = position.x;
     }

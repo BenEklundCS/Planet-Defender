@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.planetdefender.game.events.BoundaryChecker;
+import com.planetdefender.game.utils.BoundaryChecker;
 
 import static com.planetdefender.game.Spot.*;
 
@@ -27,7 +27,8 @@ public class Player implements Entity {
         // Positioning
         float player_y_offset = 50f;
         position = new Vector2((float) Gdx.graphics.getWidth()/2 - sprite.getWidth() * sprite.getScaleX()/2, sprite.getScaleY() + player_y_offset);
-        bullet = new Bullet(position);
+        float bullet_speed = 2500f;
+        bullet = new Bullet(position, bullet_speed);
     }
 
     public void Update(float deltaTime) { // pass deltaTime to any "move" methods to determine how far they should move.

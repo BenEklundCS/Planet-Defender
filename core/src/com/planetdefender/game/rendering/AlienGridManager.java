@@ -5,7 +5,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.planetdefender.game.entities.Alien;
 import com.planetdefender.game.entities.Player;
-import com.planetdefender.game.events.BoundaryChecker;
+import com.planetdefender.game.utils.BoundaryChecker;
+
+import java.util.Random;
 
 import static com.planetdefender.game.Spot.*;
 
@@ -22,6 +24,7 @@ public class AlienGridManager {
     private TextureRegion alienTexture;
     private final Player player;
     public boolean game_over = false;
+    private final Random random = new Random();
 
     public AlienGridManager(Player player) {
         this.alienTexture = textureManager.getTexture("blue_alien");
@@ -31,10 +34,19 @@ public class AlienGridManager {
     }
 
     public void Update() {
+        fireBullets();
         checkBulletCollisions();
         setAlienDimensions();
         checkEdgeConditions();
         updateAlienOffsets();
+    }
+
+    public void fireBullets() {
+        for (Alien alien : aliens) {
+            if (random.nextFloat() < 0.5) { // Adjust the probability as needed
+                alien.fireBullet();
+            }
+        }
     }
 
     private void checkBulletCollisions() {

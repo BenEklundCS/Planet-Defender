@@ -1,4 +1,4 @@
-package com.planetdefender.game.events;
+package com.planetdefender.game.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;

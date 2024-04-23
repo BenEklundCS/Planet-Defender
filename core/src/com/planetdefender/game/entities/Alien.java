@@ -2,16 +2,23 @@ package com.planetdefender.game.entities;
 import static com.planetdefender.game.Spot.*;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 public class Alien implements Entity {
     private final Vector2 position;
     private Sprite sprite;
     public boolean alive = true;
+    private List<Bullet> bullets = new ArrayList<>();
     public Alien(Vector2 position, TextureRegion alienTexture) {
         this.position = position;
         sprite = new Sprite(alienTexture);
@@ -22,6 +29,24 @@ public class Alien implements Entity {
     public void Draw(SpriteBatch batch) {
         sprite.setPosition(position.x, position.y);
         sprite.draw(batch);
+    }
+    @Override
+    public void Update(float deltaTime) {
+        // ... other update code ...
+
+        // Update bullets
+        Iterator<Bullet> iterator = bullets.iterator();
+        while (iterator.hasNext()) {
+            Bullet bullet = iterator.next();
+            bullet.move(deltaTime);
+            if (bullet.getPosition().y < 0) {
+                iterator.remove();
+            }
+        }
+    }
+
+    public List<Bullet> getBullets() {
+        return bullets;
     }
 
     @Override
@@ -42,5 +67,10 @@ public class Alien implements Entity {
     @Override
     public void setSprite(Sprite sprite) {
         this.sprite = sprite;
+    }
+
+    public void fireBullet() {
+        Bullet bullet = new Bullet(new Vector2(position.x, position.y), -2500f);
+        bullets.add(bullet);
     }
 }
