@@ -2,6 +2,7 @@ package com.planetdefender.game.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -15,7 +16,8 @@ public class Player implements Entity {
     private Sprite sprite;
     private final float speed = 900f;
     private int kills = 0;
-    Bullet bullet;
+    private Bullet bullet;
+    private final Sound laser = Gdx.audio.newSound(Gdx.files.internal("Sound Effects/laser.wav"));
 
     public Player() {
         // Player sprite generation
@@ -44,6 +46,7 @@ public class Player implements Entity {
         // Bullet reset (fire on SPACEBAR)
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && bullet.getPosition().y > Gdx.graphics.getHeight()) {
             bullet.reset(position);
+            laser.play(0.5f);
         }
         // Player movement
         if (Gdx.input.isKeyPressed(Input.Keys.A)) movePlayerLeft(deltaTime); // move left on A

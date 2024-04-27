@@ -1,5 +1,6 @@
 package com.planetdefender.game.screens;
 
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -9,6 +10,7 @@ import com.planetdefender.game.rendering.AlienGridManager;
 import com.planetdefender.game.rendering.AlienGridRenderer;
 import com.planetdefender.game.PlanetDefender;
 import com.planetdefender.game.entities.Player;
+import com.badlogic.gdx.audio.Music;
 
 public class GameScreen implements Screen {
     private final Player player;
@@ -16,6 +18,7 @@ public class GameScreen implements Screen {
     private final AlienGridManager manager;
     private final SpriteBatch batch;
     private final Background background;
+    private final Music music;
 
     public GameScreen(Background background, Player player, AlienGridRenderer renderer, AlienGridManager manager, SpriteBatch batch) {
         this.background = background;
@@ -23,6 +26,10 @@ public class GameScreen implements Screen {
         this.renderer = renderer;
         this.manager = manager;
         this.batch = batch;
+        music = Gdx.audio.newMusic(Gdx.files.internal("Music/main.mp3"));
+        music.setLooping(true);
+        music.setVolume(0.5f);
+        music.play();
     }
 
     @Override
@@ -36,6 +43,7 @@ public class GameScreen implements Screen {
         batch.end();
 
         if (renderer.isGameOver()) {
+            music.stop();
             ((PlanetDefender) Gdx.app.getApplicationListener()).gameOver();
         }
     }
