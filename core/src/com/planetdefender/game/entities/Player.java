@@ -26,7 +26,8 @@ public class Player implements Entity {
         sprite.setScale(player_scale);
         // Positioning
         float player_y_offset = 50f;
-        position = new Vector2((float) Gdx.graphics.getWidth()/2 - sprite.getWidth() * sprite.getScaleX()/2, sprite.getScaleY() + player_y_offset);
+        position = new Vector2((float) Gdx.graphics.getWidth()/2 - sprite.getWidth() * sprite.getScaleX()/2,
+                sprite.getScaleY() + player_y_offset);
         float bullet_speed = 2500f;
         bullet = new Bullet(position, bullet_speed);
     }
@@ -52,13 +53,13 @@ public class Player implements Entity {
 
     private void checkBoundaries() {
         BoundaryChecker boundaryChecker = new BoundaryChecker(0, Gdx.graphics.getWidth());
-        if (boundaryChecker.isOutOfLeftBound(position, sprite.getWidth() * sprite.getScaleX())) {
+        if (boundaryChecker.isOutOfLeftBound(position, sprite.getWidth() * sprite.getScaleX()))
             position.x = sprite.getWidth() * sprite.getScaleX();
-        }
+
         int right_bound_offset = 4;
-        if (boundaryChecker.isOutOfRightBound(position, sprite.getWidth() * sprite.getScaleX() / right_bound_offset)) {
+
+        if (boundaryChecker.isOutOfRightBound(position, sprite.getWidth() * sprite.getScaleX() / right_bound_offset))
             position.x = Gdx.graphics.getWidth() - sprite.getWidth() * sprite.getScaleX() / right_bound_offset;
-        }
     }
 
     public void Draw(SpriteBatch batch) {

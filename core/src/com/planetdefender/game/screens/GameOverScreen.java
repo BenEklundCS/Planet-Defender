@@ -30,8 +30,10 @@ public class GameOverScreen implements Screen {
 
         batch.begin();
         background.Draw(batch);
-        font.draw(batch, "GAME OVER", (Gdx.graphics.getWidth() / 4f) - offset, Gdx.graphics.getHeight() / 2f + offset);
-        font.draw(batch, "YOU KILLED " + kills + " ALIENS!", (Gdx.graphics.getWidth() / 4f) - offset, (Gdx.graphics.getHeight() / 2f));
+        font.draw(batch, "GAME OVER",
+                (Gdx.graphics.getWidth() / 4f) - offset, Gdx.graphics.getHeight() / 2f + offset);
+        font.draw(batch, "YOU KILLED " + kills + " ALIENS!",
+                (Gdx.graphics.getWidth() / 4f) - offset, (Gdx.graphics.getHeight() / 2f));
         batch.end();
     }
 

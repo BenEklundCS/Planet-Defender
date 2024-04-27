@@ -71,13 +71,15 @@ public class AlienGridManager {
     private void checkEdgeConditions() {
         BoundaryChecker boundaryChecker = new BoundaryChecker(0, Gdx.graphics.getWidth());
         int alien_offset = 40;
-        if (boundaryChecker.isOutOfLeftBound(aliens[minX_aliens].getPosition(), aliens[minX_aliens].getSprite().getWidth() + alien_offset)) {
+        if (boundaryChecker.isOutOfLeftBound(aliens[minX_aliens].getPosition(),
+                aliens[minX_aliens].getSprite().getWidth() + alien_offset)) {
             toggleDirection();
             dropdown();
             speedup();
         }
 
-        if (boundaryChecker.isOutOfRightBound(aliens[maxX_aliens].getPosition(), aliens[maxX_aliens].getSprite().getWidth() + alien_offset)) {
+        if (boundaryChecker.isOutOfRightBound(aliens[maxX_aliens].getPosition(),
+                aliens[maxX_aliens].getSprite().getWidth() + alien_offset)) {
             toggleDirection();
             dropdown();
             speedup();
@@ -88,7 +90,7 @@ public class AlienGridManager {
         speed_aliens *= 1.05f;
     }
     public void resetSpeed() {
-        base_speed_aliens *= 1.05f;
+        base_speed_aliens *= 1.15f;
         speed_aliens = base_speed_aliens;
     }
 
@@ -126,7 +128,8 @@ public class AlienGridManager {
     }
 
     void checkPlayerDeath(Alien alien) {
-        boolean contact = alien.getSprite().getBoundingRectangle().overlaps(player.getSprite().getBoundingRectangle());
+        boolean contact = alien.getSprite().getBoundingRectangle().overlaps(
+                player.getSprite().getBoundingRectangle());
         boolean position = alien.getPosition().y < 0;
         if (contact || position) {
             game_over = true;
