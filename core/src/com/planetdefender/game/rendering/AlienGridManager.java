@@ -108,7 +108,7 @@ public class AlienGridManager {
         offset_aliens.x = direction_aliens * speed_aliens;
     }
 
-    void createAliens() {
+    public void createAliens() {
         int width_aliens = (int) dimensions.x;
         int height_aliens = (int) dimensions.y;
         aliens = new Alien[width_aliens * height_aliens];
@@ -121,6 +121,12 @@ public class AlienGridManager {
                 position.y += Gdx.graphics.getHeight();
                 position.x -= ((float) width_aliens /2) * spacing;
                 position.y -= height_aliens * spacing;
+
+                // Add a safe zone for the player
+                if (position.x < player.getSprite().getWidth() || position.x > Gdx.graphics.getWidth() - player.getSprite().getWidth()) {
+                    continue;
+                }
+
                 aliens[i] = new Alien(position, alienTexture);
                 i++;
             }
@@ -128,10 +134,10 @@ public class AlienGridManager {
     }
 
     void checkPlayerDeath(Alien alien) {
-        boolean contact = alien.getSprite().getBoundingRectangle().overlaps(
-                player.getSprite().getBoundingRectangle());
-        boolean position = alien.getPosition().y < 0;
-        if (contact || position) {
+        if (alien.getSprite().getBoundingRectangle().overlaps(player.getSprite().getBoundingRectangle())) {
+            game_over = true;
+        }
+        if (alien.getPosition().y < 0) {
             game_over = true;
         }
     }

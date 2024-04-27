@@ -24,9 +24,9 @@ public class AlienGridRenderer {
         for (Alien alien : alienGridManager.getAliens()) {
             if (alien.alive) {
                 alien.getPosition().add(alienGridManager.getOffsetAliens());
-                alienGridManager.checkPlayerDeath(alien);
                 alien.Draw(batch);
                 all_dead = false;
+                alienGridManager.checkPlayerDeath(alien);
             }
         }
         if (all_dead) {
