@@ -44,6 +44,7 @@ public class GameScreen implements Screen {
 
         if (renderer.isGameOver()) {
             music.stop();
+            manager.dispose();
             ((PlanetDefender) Gdx.app.getApplicationListener()).gameOver();
         }
     }

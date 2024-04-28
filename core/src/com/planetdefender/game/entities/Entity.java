@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public interface Entity {
     void Draw(SpriteBatch batch);
+    void dispose();
     Vector2 getPosition();
     Sprite getSprite();
     void setPosition(Vector2 position);

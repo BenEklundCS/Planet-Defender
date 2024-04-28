@@ -111,6 +111,12 @@ public class Player implements Entity {
     public Bullet getBullet() {
         return bullet;
     }
+
+    public void dispose() {
+        laser.dispose();
+        bullet.dispose();
+        sprite.getTexture().dispose();
+    }
 }
 
 

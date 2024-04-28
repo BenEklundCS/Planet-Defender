@@ -58,4 +58,8 @@ public class Bullet implements Entity {
     public boolean getCollide(Sprite sprite) {
         return this.sprite.getBoundingRectangle().overlaps(sprite.getBoundingRectangle());
     }
+
+    public void dispose() {
+        sprite.getTexture().dispose();
+    }
 }

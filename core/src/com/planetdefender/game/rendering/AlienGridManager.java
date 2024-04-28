@@ -165,4 +165,9 @@ public class AlienGridManager {
     public void setDimensions(Vector2 dimensions) {
         this.dimensions = dimensions;
     }
+    public void dispose() {
+        for (Alien alien : aliens) {
+            alien.dispose();
+        }
+    }
 }

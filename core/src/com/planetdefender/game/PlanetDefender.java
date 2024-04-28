@@ -32,6 +32,7 @@ public class PlanetDefender extends Game {
 	public void dispose () {
 		batch.dispose();
 		textureManager.dispose();
+		player.dispose();
 	}
 
 	public void gameOver() {

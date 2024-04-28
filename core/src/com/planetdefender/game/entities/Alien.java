@@ -50,4 +50,7 @@ public class Alien implements Entity {
     public void setSprite(Sprite sprite) {
         this.sprite = sprite;
     }
+    public void dispose() {
+        sprite.getTexture().dispose();
+    }
 }
