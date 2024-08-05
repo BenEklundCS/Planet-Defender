@@ -49,8 +49,8 @@ public class Player implements Entity {
             laser.play(0.5f);
         }
         // Player movement
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) movePlayerLeft(deltaTime); // move left on A
-        if (Gdx.input.isKeyPressed(Input.Keys.D)) movePlayerRight(deltaTime); // move right on D
+        if (Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) movePlayerLeft(deltaTime); // move left on A
+        if (Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) movePlayerRight(deltaTime); // move right on D
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) Gdx.app.exit(); // exit on ESC
     }
 

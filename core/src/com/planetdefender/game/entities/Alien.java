@@ -18,7 +18,7 @@ public class Alien implements Entity {
     private final Vector2 position;
     private Sprite sprite;
     public boolean alive = true;
-    private List<Bullet> bullets = new ArrayList<>();
+    private final List<Bullet> bullets = new ArrayList<>();
     public Alien(Vector2 position, TextureRegion alienTexture) {
         this.position = position;
         sprite = new Sprite(alienTexture);
